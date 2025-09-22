@@ -1,0 +1,89 @@
+uild a Leads Exchange Platform inside a single Replit project.
+
+Tech stack
+
+Backend: Node.js + Express + PostgreSQL + Prisma ORM + JWT Authentication
+
+Frontend: React (Vite) + TailwindCSS
+
+Both backend and frontend in one project (/backend, /frontend).
+
+Authentication & Roles
+
+User registration/login with JWT.
+
+Roles: user, admin, superadmin.
+
+Superadmin seeded via env vars: SUPERADMIN_EMAIL, SUPERADMIN_PASSWORD.
+
+Features
+
+Superadmin: approve/reject leads, create/manage admins, assign credits.
+
+Admin:
+
+Can log in.
+
+Can submit leads.
+
+Needs credits to view leads submitted by others.
+
+User:
+
+Can register/login.
+
+Can submit leads.
+
+Needs credits to view leads submitted by others.
+
+Credits & Leads Rules:
+
+Every new user starts with 0 credits.
+
+Submitting a lead does not require credits.
+
+Viewing leads submitted by others requires credits (deduct 1 credit per view).
+
+Superadmin can assign/revoke credits.
+
+Leads default to status = pending.
+
+Only approved leads are visible for viewing.
+
+Database (PostgreSQL + Prisma)
+
+User Table: id, name, email, password, role, credits (default 0).
+
+Lead Table: id, title, description, contact, category, status (pending/approved/rejected), submitted_by (FK to user).
+
+Prisma schema + migrations included.
+
+Seed script: create superadmin from env vars.
+
+Deliverables
+
+/backend: Prisma schema, migrations, Express routes (auth, leads, users, approvals, credit system), middleware for role-based access.
+
+/frontend: React pages for login, register, dashboards (user, admin, superadmin). Tailwind UI.
+
+.replit: single config that starts both backend & frontend.
+
+README.md: setup guide (Postgres URL in .env, migration steps, how to run).
+
+API
+
+Auth: /api/auth/register, /api/auth/login.
+
+Leads:
+
+/api/leads/submit → submit a new lead.
+
+/api/leads/my → view own leads (free).
+
+/api/leads/all → view approved leads (deducts credits if not your own).
+
+/api/leads/approve/:id → superadmin approves/rejects.
+
+Admin: /api/admin/users, /api/admin/create.
+
+Superadmin: /api/superadmin/credits/:userId → assign/revoke credits.
